@@ -1,0 +1,10 @@
+const express=require('express')
+const route=express.Router()
+const {createProduct,getAllProduct,uploadImage,getSingleProduct,deleteProduct,updateProduct}=require('../controllers/productController')
+const {authenticateUser,checkPermissions}=require('../middlewares/authentication')
+const {getSingleProductReviews}=require('../controllers/reviewController')
+route.get('/',getAllProduct).post('/',authenticateUser,checkPermissions('admin'),createProduct)
+route.get('/:id',getSingleProduct).patch('/:id',authenticateUser,checkPermissions('admin'),updateProduct).delete('/:id',authenticateUser,checkPermissions('admin'),deleteProduct)
+route.get('/:id/reviews',getSingleProductReviews)
+route.post('/uploads',authenticateUser,checkPermissions('admin'),uploadImage)
+module.exports=route
