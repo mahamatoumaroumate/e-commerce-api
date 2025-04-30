@@ -42,7 +42,10 @@ app.use(xss())
 app.use(mongoSanitize())
 // now all other routes can use express.json()
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // or your frontend URL
+  credentials: true, // 🔥 allow credentials (cookies, headers)
+}));
 app.use(morgan('tiny'));
 app.use(fileUpload({ useTempFiles: true }));
 app.use(cookieParser(process.env.JWT_SECRET));
