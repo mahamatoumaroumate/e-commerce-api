@@ -3,7 +3,7 @@ require('dotenv').config();
 require('express-async-errors');
 const helmet=require('helmet')
 const rateLimiter=require('express-rate-limit')
-const xss=require('')
+const xss=require('xss-clean')
 const mongoSanitize=require('express-mongo-sanitize')
 const express = require('express');
 const bodyParser = require('body-parser');
