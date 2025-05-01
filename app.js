@@ -43,7 +43,7 @@ app.use(mongoSanitize())
 // now all other routes can use express.json()
 app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:5173', // or your frontend URL
+  origin: 'https://e-commerce-admin-dashboar.netlify.app/', // or your frontend URL
   credentials: true, // 🔥 allow credentials (cookies, headers)
 }));
 app.use(morgan('tiny'));
