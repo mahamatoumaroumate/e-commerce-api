@@ -15,12 +15,14 @@ const createUserToken=({user})=>{
  const attachCookiesToResponse=({res,user})=>{
     const token=createJWT({payload:user})
     const oneDay=1000 * 60 * 60 * 24
-    res.cookie('token',token,{
-        httpOnly:true,
-        expires:new Date(Date.now()+oneDay),
-        secure:process.env.NODE_ENV==='production',
-        signed:true
-    })
+    res.cookie('token', token, {
+        httpOnly: true,
+        expires: new Date(Date.now() + oneDay),
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'None', // 🔥 required for cross-origin cookies
+        signed: true,
+      });
+      
 }
 const isTokenValid=({token})=>jwt.decode(token,process.env.JWT_SECRET)
 module.exports={isTokenValid,attachCookiesToResponse,createJWT,createUserToken}
