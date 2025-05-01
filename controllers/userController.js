@@ -20,19 +20,15 @@ const showCurrentUser=async(req,res)=>{
     }
     res.status(StatusCodes.OK).json({user})
 }
+
 const updateUser=async(req,res)=>{
-    const {name,email}=req.body
+    const {name,email,role}=req.body
     if(!name || !email){
         throw new CustomErrors.BadRequest('please provide all the fields values')
     }
-    const user=await User.findOne({_id:req.user.userId})
-    console.log(user);
-    user.name=name
-    user.email=email
-   await user.save()
+    const user=await User.findOneAndUpdate({_id:req.user.userId},{name,email,role},{new:true,runValidators:true}).select('-password')
     res.status(StatusCodes.OK).json({msg:'updated user successfully',user})
 }
-
 const updateUserPassword=async(req,res)=>{
     const {oldPassword,newPassword}=req.body
     const user=await User.findOne({_id:req.user.userId})
@@ -61,6 +57,10 @@ module.exports={getAllUsers,getSingleUser,showCurrentUser,updateUser,updateUserP
 //     if(!name || !email){
 //         throw new CustomErrors.BadRequest('please provide all the fields values')
 //     }
-//     const user=await User.findOneAndUpdate({_id:req.user.userId},{name,email},{new:true,runValidators:true}).select('-password')
+//     const user=await User.findOne({_id:req.user.userId})
+//     console.log(user);
+//     user.name=name
+//     user.email=email
+//    await user.save()
 //     res.status(StatusCodes.OK).json({msg:'updated user successfully',user})
 // }
