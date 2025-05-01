@@ -9,7 +9,7 @@ const getAllUsers=async(req,res)=>{
 const getSingleUser=async(req,res)=>{
     const user=await User.findOne({_id:req.params.id}).select('-password')
     if(!user){
-        throw new CustomErrors.NotFound(`No user found with id : ${req.user.userId}`)
+        throw new CustomErrors.NotFound(`No user found with id : ${req.params.id}`)
     }
     res.status(StatusCodes.OK).json({user})
 }
