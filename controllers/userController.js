@@ -7,7 +7,7 @@ const getAllUsers=async(req,res)=>{
     res.status(StatusCodes.OK).json({users,count:users.length})
 }
 const getSingleUser=async(req,res)=>{
-    const user=await User.findOne({_id:req.user.userId}).select('-password')
+    const user=await User.findOne({_id:req.params.id}).select('-password')
     if(!user){
         throw new CustomErrors.NotFound(`No user found with id : ${req.user.userId}`)
     }
@@ -48,7 +48,8 @@ const updateUserPassword=async(req,res)=>{
     res.send('password updated successfully')
 }
 const deleteUser=async(req,res)=>{
-    res.send('delete user')
+    const user=await User.findOneAndDelete({_id:req.params.id})
+    res.status(StatusCodes.OK).json({msg:"successfully deleted user"})
 }
 
 module.exports={getAllUsers,getSingleUser,showCurrentUser,updateUser,updateUserPassword,deleteUser}

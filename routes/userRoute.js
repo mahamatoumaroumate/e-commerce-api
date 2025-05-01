@@ -7,5 +7,5 @@ route.get('/',authenticateUser,checkPermissions('admin'),getAllUsers)
 route.get('/showMe',authenticateUser,showCurrentUser)
 route.patch('/updateUser',authenticateUser,updateUser)
 route.patch('/updateUserPassword',authenticateUser,updateUserPassword)
-route.get('/:id',authenticateUser,getSingleUser).delete('/:id',deleteUser)
+route.get('/:id',authenticateUser,getSingleUser).delete('/:id',authenticateUser,checkPermissions('admin'),deleteUser)
 module.exports=route
