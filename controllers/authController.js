@@ -37,5 +37,7 @@ const logout=async(req,res)=>{
     })
     res.status(StatusCodes.OK).json({msg:"successfully logout"})
 }
-
-module.exports={login,logout,register}
+const verify=async(req,res)=>{
+    res.status(StatusCodes.OK).json({msg:"successfully logged",user:req.user})
+}
+module.exports={login,logout,register,verify}
