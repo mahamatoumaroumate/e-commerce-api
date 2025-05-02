@@ -26,7 +26,7 @@ const updateUser=async(req,res)=>{
     if(!name || !email){
         throw new CustomErrors.BadRequest('please provide all the fields values')
     }
-    const user=await User.findOneAndUpdate({_id:req.user.userId},{name,email,role},{new:true,runValidators:true}).select('-password')
+    const user=await User.findOneAndUpdate({_id:req.user.userId},req.body,{new:true,runValidators:true}).select('-password')
     res.status(StatusCodes.OK).json({msg:'updated user successfully',user})
 }
 const updateUserPassword=async(req,res)=>{
