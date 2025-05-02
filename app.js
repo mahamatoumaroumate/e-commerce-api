@@ -61,7 +61,12 @@ app.use(cors({
 
 // Handle OPTIONS preflight
 app.options('*', cors());
-
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET_KEY,
+});
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(fileUpload({ useTempFiles: true }));
