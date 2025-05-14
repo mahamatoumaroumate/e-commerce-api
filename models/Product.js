@@ -44,7 +44,7 @@ const ProductSchema = new mongoose.Schema({
     default: false
   },
   color: {
-    type: [String],
+    type: String,
     default: ['White'],
     required: [true, 'Please provide the value for color']
   },
