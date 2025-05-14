@@ -29,7 +29,6 @@ const ProductSchema = new mongoose.Schema({
   
   mainCategory: {
     type: String,
-    enum: Object.keys(categoryMap),
     required: [true, 'Please select a main category'],
   },
   subCategory: {
