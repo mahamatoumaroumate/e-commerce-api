@@ -1,20 +1,5 @@
 const mongoose = require('mongoose');
 
-// Mapping of main categories to their valid subcategories
-const categoryMap = {
-  "Women's Fashion": ['Dresses', 'Tops & Tees', 'Jeans', 'Activewear', 'Swimwear'],
-  "Men's Fashion": ['Shirts', 'T-Shirts', 'Jeans', 'Activewear', 'Suits'],
-  "Electronics": ['Smartphones', 'Laptops', 'Headphones', 'Smart Watches', 'Cameras'],
-  "Home & Living": ['Furniture', 'Bedding', 'Home Decor', 'Kitchen', 'Lighting'],
-  "Beauty": ['Makeup', 'Skincare', 'Haircare', 'Fragrances'],
-  "Kids": ['Clothing', 'Toys', 'Shoes', 'Baby Gear'],
-};
-
-const allowedColors = [
-  "Black", "White", "Gray", "Blue", "Red", "Green", "Yellow", "Orange",
-  "Purple", "Pink", "Brown", "Beige", "Navy", "Maroon", "Olive", "Gold",
-  "Silver", "Multicolor"
-];
 
 const ProductSchema = new mongoose.Schema({
   name: {
@@ -39,13 +24,7 @@ const ProductSchema = new mongoose.Schema({
   },
   subImages: {
     type: [String], // array of image URLs
-    validate: {
-      validator: function (arr) {
-        return Array.isArray(arr) && arr.length <= 5;
-      },
-      message: 'You can provide up to 5 sub images only',
-    },
-    default: [],
+    required:[true , 'please provide the subImages']
   },
   
   mainCategory: {
@@ -56,13 +35,6 @@ const ProductSchema = new mongoose.Schema({
   subCategory: {
     type: String,
     required: [true, 'Please select a subcategory'],
-    validate: {
-      validator: function (value) {
-        const validSubcategories = categoryMap[this.mainCategory] || [];
-        return validSubcategories.includes(value);
-      },
-      message: 'Invalid subcategory for the selected main category',
-    },
   },
   featured: {
     type: Boolean,
@@ -74,10 +46,6 @@ const ProductSchema = new mongoose.Schema({
   },
   color: {
     type: [String],
-    enum: {
-      values: allowedColors,
-      message: '{VALUE} is not a supported color',
-    },
     default: ['White'],
     required: [true, 'Please provide the value for color']
   },
