@@ -47,4 +47,14 @@ const uploadImage=async(req,res)=>{
     fs.unlinkSync(req.files.image.tempFilePath)
   return  res.status(StatusCodes.OK).json({image:{src:result.secure_url}})
 }
-module.exports={createProduct,getAllProduct,getSingleProduct,deleteProduct,updateProduct,uploadImage}
+// DELETE /api/delete-image
+const deleteImage=async( req, res) => {
+  const { publicId } = req.body;
+    const result = await cloudinary.uploader.destroy(publicId);
+    if(!result){
+        throw new CustomErrors.NotFound(`There is no image with this URL : ${publicId}`)
+    }
+    res.status(200).json(result);
+};
+
+module.exports={createProduct,getAllProduct,getSingleProduct,deleteProduct,updateProduct,uploadImage,deleteImage}
