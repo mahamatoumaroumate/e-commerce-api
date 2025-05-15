@@ -4,6 +4,7 @@ const {createProduct,getAllProduct,deleteImage,uploadImage,getSingleProduct,dele
 const {authenticateUser,checkPermissions}=require('../middlewares/authentication')
 const {getSingleProductReviews}=require('../controllers/reviewController')
 route.get('/',getAllProduct).post('/',authenticateUser,checkPermissions('admin'),createProduct)
+route.delete('/deleteImage',authenticateUser,checkPermissions('admin'),deleteImage)
 route.get('/:id',getSingleProduct).patch('/:id',authenticateUser,checkPermissions('admin'),updateProduct).delete('/:id',authenticateUser,checkPermissions('admin'),deleteProduct)
 route.get('/:id/reviews',getSingleProductReviews)
 route.post('/uploads',authenticateUser,checkPermissions('admin'),uploadImage)
