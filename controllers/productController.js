@@ -54,7 +54,7 @@ const deleteImage=async( req, res) => {
 
 const result = await cloudinary.uploader.destroy(imageUrl);
 if (result.result !== 'ok') {
-  throw new CustomErrors.NotFound(`There is no image with this publicId: ${publicId}`);
+  throw new CustomErrors.NotFound(`There is no image with this publicId: ${imageUrl}`);
 }
 
 res.status(200).json(result);
