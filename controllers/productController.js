@@ -49,12 +49,23 @@ const uploadImage=async(req,res)=>{
 }
 // DELETE /api/delete-image
 const deleteImage=async( req, res) => {
-  const { publicId } = req.body;
-    const result = await cloudinary.uploader.destroy(publicId);
-    if(!result){
-        throw new CustomErrors.NotFound(`There is no image with this URL : ${publicId}`)
-    }
-    res.status(200).json(result);
+ const { imageUrl } = req.body;
+const extractPublicId = (url) => {
+  const match = url.match(/upload\/(?:v\d+\/)?(.+)\.\w+$/);
+  return match ? match[1] : null;
+};
+
+const publicId = extractPublicId(imageUrl);
+if (!publicId) {
+  throw new CustomErrors.BadRequest("Invalid Cloudinary image URL");
+}
+
+const result = await cloudinary.uploader.destroy(publicId);
+if (result.result !== 'ok') {
+  throw new CustomErrors.NotFound(`There is no image with this publicId: ${publicId}`);
+}
+
+res.status(200).json(result);
 };
 
 module.exports={createProduct,getAllProduct,getSingleProduct,deleteProduct,updateProduct,uploadImage,deleteImage}
