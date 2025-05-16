@@ -48,16 +48,16 @@ const uploadImage=async(req,res)=>{
   return  res.status(StatusCodes.OK).json({image:{src:result.secure_url}})
 }
 // DELETE /api/delete-image
-const deleteImage=async( req, res) => {
- const { imageUrl } = req.body;
+const deleteImage = async (req, res) => {
+  const { publicId } = req.body;
 
+  const result = await cloudinary.uploader.destroy(publicId);
+  if (result.result !== 'ok') {
+    throw new CustomErrors.NotFound(`There is no image with this publicId: ${publicId}`);
+  }
 
-const result = await cloudinary.uploader.destroy(imageUrl);
-if (result.result !== 'ok') {
-  throw new CustomErrors.NotFound(`There is no image with this publicId: ${imageUrl}`);
-}
-
-res.status(200).json(result);
+  res.status(200).json(result);
 };
+
 
 module.exports={createProduct,getAllProduct,getSingleProduct,deleteProduct,updateProduct,uploadImage,deleteImage}
