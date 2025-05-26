@@ -72,6 +72,7 @@ ProductSchema.virtual('reviews',{
 ProductSchema.pre('deleteOne',{document:true,query:false},async function(next){
   try {
     await this.model('Review').deleteMany({product:this._id})
+    await this.model('Favorite').deleteMany({ product: this._id });
     next()
   } catch (error) {
     next(error)

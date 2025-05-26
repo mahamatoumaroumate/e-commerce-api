@@ -27,6 +27,12 @@ const UserSchema=mongoose.Schema({
         default:'user'
     }
 })
+UserSchema.virtual('favorites', {
+  ref: 'Favorite',
+  localField: '_id',
+  foreignField: 'user',
+  justOne: false,
+});
 UserSchema.pre('save',async function(){
     if(!this.isModified('password'))return 
     const salt=await bcrypt.genSalt(10)
