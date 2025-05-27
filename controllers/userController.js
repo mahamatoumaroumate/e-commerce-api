@@ -47,11 +47,8 @@ const deleteUser=async(req,res)=>{
     const user=await User.findOneAndDelete({_id:req.params.id})
     res.status(StatusCodes.OK).json({msg:"successfully deleted user"})
 }
-const getUserFavorites=async(req,res)=>{
-  const favorites=  await User.findById({_id:req.user.userId}).populate('favorites');
-    res.status(StatusCodes.OK).json(favorites)
-}
-module.exports={getAllUsers,getUserFavorites,getSingleUser,showCurrentUser,updateUser,updateUserPassword,deleteUser}
+
+module.exports={getAllUsers,getSingleUser,showCurrentUser,updateUser,updateUserPassword,deleteUser}
 
 // other alternative for updateUser
 

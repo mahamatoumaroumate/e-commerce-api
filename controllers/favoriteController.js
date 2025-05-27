@@ -22,4 +22,11 @@ const deleteFavorite=async(req,res)=>{
     const favorite=await Favorite.findOneAndDelete({_id:req.params.id,user,product})
     res.status(StatusCodes.OK).json({favorite,msg:'successfully deleted favorite'})
 }
-module.exports={addFavorite,deleteFavorite}
+const getUserFavorites = async (req, res) => {
+ 
+    const favorites = await Favorite.find({ user: req.user.userId }).populate('product');
+    res.status(StatusCodes.OK).json(favorites);
+  
+};
+
+module.exports={addFavorite,deleteFavorite,getUserFavorites}
