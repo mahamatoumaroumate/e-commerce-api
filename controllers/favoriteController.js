@@ -23,8 +23,8 @@ const deleteFavorite=async(req,res)=>{
     res.status(StatusCodes.OK).json({favorite,msg:'successfully deleted favorite'})
 }
 const getUserFavorites = async (req, res) => {
- 
-    const favorites = await Favorite.find({ user: req.user.userId }).populate('product');
+ const {user}=req.body
+    const favorites = await Favorite.find({ user: user}).populate('product');
     res.status(StatusCodes.OK).json(favorites);
   
 };
