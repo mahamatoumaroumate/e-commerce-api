@@ -4,5 +4,5 @@ const {addFavorite,deleteFavorite,getUserFavorites}=require('../controllers/favo
 const {authenticateUser,checkPermissions}=require('../middlewares/authentication')
 route.get('/',getUserFavorites)
 route.post('/',authenticateUser,addFavorite)
-route.delete('/:id',authenticateUser,deleteFavorite)
+route.delete('/',authenticateUser,deleteFavorite)
 module.exports=route

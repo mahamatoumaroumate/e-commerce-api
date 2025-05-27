@@ -19,7 +19,7 @@ const deleteFavorite=async(req,res)=>{
     }
     const dbProduct=await Product.find({_id:product})
     if(!dbProduct)throw new CustomErrors.NotFound(`Sorry no product found with id : ${product}`)
-    const favorite=await Favorite.findOneAndDelete({_id:req.params.id,user,product})
+    const favorite=await Favorite.findOneAndDelete({user:user,product:product})
     res.status(StatusCodes.OK).json({favorite,msg:'successfully deleted favorite'})
 }
 const getUserFavorites = async (req, res) => {
