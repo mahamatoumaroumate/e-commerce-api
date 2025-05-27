@@ -13,7 +13,7 @@ const addFavorite=async(req,res)=>{
     res.status(StatusCodes.OK).json({favorite,msg:'successfully added favorite'})
 }
 const deleteFavorite=async(req,res)=>{
-    const {user,product}=req.body
+    const {user,product}=req.query
     if(!user || !product){
         throw new CustomErrors.BadRequest('please provide all the values user and product')
     }
