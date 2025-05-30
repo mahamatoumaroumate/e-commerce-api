@@ -9,7 +9,7 @@ const createProduct=async(req,res)=>{
     res.status(StatusCodes.CREATED).json({product})
 }
 const getAllProduct=async(req,res)=>{
-    const {featured,search,category,subCategories}=req.query
+    const {featured,search,category,subCategory}=req.query
     let queryProduct={}
     if(featured){
         queryProduct.featured=true
@@ -18,10 +18,10 @@ const getAllProduct=async(req,res)=>{
         queryProduct.name={$regex:search,$options:'i'}
     }
     if(category){
-        queryProduct.category=category
+        queryProduct.mainCategory=category
     }
-    if(subCategories){
-        queryProduct.subCategories=subCategories
+    if(subCategory){
+        queryProduct.subCategory=subCategory
     }
     const products=await Product.find(queryProduct)
     res.status(StatusCodes.OK).json({products,count:products.length})
